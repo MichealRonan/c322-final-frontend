@@ -1,0 +1,60 @@
+.orderDetailsContainer{
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    background-color: #E8EAF6;
+    height:auto;
+
+}
+
+.orderDetailsContainer img{
+    width: 50%;
+    height: 50%;
+}
+
+
+.order-summary {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.order-summary h1 {
+    color: #333;
+    font-weight: bold;
+}
+.order-summary h2 {
+    color: #333;
+    font-weight: bold;
+}
+.order-summary p {
+    margin: 5px 0;
+}
+.order-summary .price {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.order-summary .savings {
+    color: green;
+    font-weight: bold;
+}
+.order-summary .total {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.order-summary button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+.order-summary button:hover {
+    opacity: 0.8;
+}
+.order-summary .disclaimer {
+    font-size: 0.8em;
+    color: #666;
+}

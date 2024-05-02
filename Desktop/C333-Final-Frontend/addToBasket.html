@@ -24,6 +24,7 @@
 
 <script src="Configuration.js"></script>
 <script>
+    let host = "https://localhost:6001";
     let basket = [];
     window.onload = function() {
         let selectedFlower = JSON.parse(localStorage.getItem('selectedFlower'));
@@ -50,7 +51,7 @@
     function createProductSelection(flower){
         return `
                 <div class="product-image">
-                    <img src="${host}/flowers/${flower.id}/image" alt="${flower.name}">
+                   <img src="${host}/flowers/${flower.id}/image" alt="${flower.name}">
                 </div>
                 <div class="product-details">
                     <h2>${flower.name}</h2>

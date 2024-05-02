@@ -41,6 +41,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -57,7 +58,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1714659308822</updated>
-      <workItem from="1714659309877" duration="4256000" />
+      <workItem from="1714659309877" duration="6766000" />
     </task>
     <servers />
   </component>

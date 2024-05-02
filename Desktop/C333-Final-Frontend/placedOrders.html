@@ -5,11 +5,10 @@
     </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
+    <title>Placed Orders</title>
     <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="addToBasketPage.css">
-    <link rel="stylesheet" href="stepper.css">
-    <link rel="stylesheet" href="placedOrder.css">
+    <link rel="stylesheet" href="addToBasket.css">
+    <link rel="stylesheet" href="placedOrders.css">
 </head>
 <body>
 <div class="navbar">
@@ -17,15 +16,8 @@
     <div class="nav-links">
         <a href="trackOrders.html">Track Order</a>
         <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" width="25"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg></a>
-        <a href="#"><img class="cart" src="icons/cart.png"></a>
+        <a href="#"><img class="cart" src="icons/cart.jpg"></a>
     </div>
-</div>
-<div class="container">
-    <ul class="progressbar">
-        <li class="active">Review</li>
-        <li class="active">Delivery</li>
-        <li>Done</li>
-    </ul>
 </div>
 
 
@@ -35,6 +27,7 @@
 
 <script src="Configuration.js"></script>
 <script>
+    let host = "https://localhost:6001";
     let selectedFlower = JSON.parse(localStorage.getItem('selectedFlower'));
     let recipient = JSON.parse(localStorage.getItem('recipient'));
     let delivery = JSON.parse(localStorage.getItem('delivery'));
@@ -159,7 +152,7 @@
         localStorage.removeItem('delivery');
 
         if (isLoggedIn() == true){
-            window.location.href = "trackOrderPage.html";
+            window.location.href = "trackOrders.html";
         } else {
             window.location.href = "login.html";
         }

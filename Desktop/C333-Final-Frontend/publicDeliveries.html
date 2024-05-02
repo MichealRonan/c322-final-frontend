@@ -8,8 +8,6 @@
     <title>Home Page</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="addToBasket.css">
-    <link rel="stylesheet" href="stepper.css">
-    <link rel="stylesheet" href="guestDelivery.css">
 </head>
 <body>
 <div class="navbar">
@@ -19,13 +17,6 @@
         <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" width="25"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg></a>
         <a href="#"><img class="cart" src="icons/cart.jpg"></a>
     </div>
-</div>
-<div class="container">
-    <ul class="progressbar">
-        <li class="active">Review</li>
-        <li>Delivery</li>
-        <li>Done</li>
-    </ul>
 </div>
 
 <div class="main">
@@ -41,10 +32,10 @@
 
 <div class="form-section">
     <h2>RECIPIENT</h2>
-    <input type="text" placeholder="First Name" required>
-    <input type="text" placeholder="Last Name" required>
+    <input type="text" placeholder="First Name*" required>
+    <input type="text" placeholder="Last Name*" required>
     <select>
-        <option value="" disabled selected>Relationship*</option>
+        <option value="" disabled selected>Relationship</option>
         <option value="Girlfriend">Girlfriend</option>
         <option value="Boyfriend">Boyfriend</option>
         <option value="Spouse">Spouse</option>
@@ -56,10 +47,9 @@
 
 <div class="form-section">
     <h2>DELIVER TO</h2>
-    <input type="text" placeholder="Address" required>
-    <p>We cannot ship to PO Boxes</p>
+    <input type="text" placeholder="Address*" required>
     <input type="text" placeholder="Apt/Suite">
-    <input type="text" placeholder="City" required>
+    <input type="text" placeholder="City*" required>
     <select>
         <option value="" disabled selected>State*</option>
         <option value="IL">Illinois</option>
@@ -68,7 +58,7 @@
         <option value="OH">Ohio</option>
         <option value="KY">Kentucky</option>
     </select>
-    <input type="text" placeholder="Zip Code" required>
+    <input type="text" placeholder="Zip Code*" required>
 </div>
 
 
@@ -116,7 +106,7 @@
         localStorage.setItem('recipient', JSON.stringify(recipient));
         localStorage.setItem('delivery', JSON.stringify(delivery));
 
-        window.location.href = "placedOrderPage.html";
+        window.location.href = "placedOrders.html";
     }
     generateFlowerInfo(selectedFlower,basket, host);
 </script>

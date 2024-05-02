@@ -1,5 +1,5 @@
 function getHost() {
-    return host;
+    return "https://localhost:6001";
 }
 
 function isLoggedIn() {
