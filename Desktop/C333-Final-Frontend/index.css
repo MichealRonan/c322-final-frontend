@@ -1,0 +1,92 @@
+body{
+    background-color: #E8EAF6;
+}
+.welcomeContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    padding: 50px;
+}
+.left{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background-color: #FCE4EC;
+}
+
+.right{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.filtersContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    background-color: #B0BEC5;
+}
+
+.filterBy{
+    padding: 20px;
+}
+
+.sortBy{
+    padding-right: 20px;
+    padding-left: 1000px;
+}
+
+.flowerCardContainer{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+
+.flower-card{
+    padding: 60px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin: 15px;
+    width: 300px;
+}
+
+.cardImage{
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+.cardImage img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cardContent{
+    padding: 20px;
+    text-align: center;
+}
+
+.cardTitle{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="filters.css">
+</head>
+<body>
+<div class="navbar">
+    <div class="logo"><a href="index.html"><img class= "logoIcon" src="icons/logo.jpg" alt="FlowerShop Logo"></a></div>
+    <div class="nav-links">
+        <a href="trackOrders.html">Track Order</a>
+        <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" width="25"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg></a>
+        <a href="#"><img class="cart" src="icons/cart.jpg"></a>
+    </div>
+</div>
+
+<div class="welcomeContainer">
+    <div class="left">
+        <h1>Fast Easy Bouquets!</h1>
+        <p>Order Flower Today!</p>
+    </div>
+    <div class="right">
+        <img src="icons/flower.jpg">
+    </div>
+</div>
+
+<div class="filtersContainer">
+    <p class = "filterBy"><strong>Filter By</strong></p>
+    <div class="dropdown">
+        <button>Flower Type</button>
+        <div class="dropdown-options">
+            <a href="#">Mixed</a>
+            <a href="#">Roses</a>
+            <a href="#">Tulips</a>
+            <a href="#">Daisies</a>
+            <a href="#">Lilies</a>
+            <a href="#">Sunflowers</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button>Occasion</button>
+        <div class="dropdown-options">
+            <a href="#">Mother's Day</a>
+            <a href="#">Birthday</a>
+            <a href="#">Thank you</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button>Color</button>
+        <div class="dropdown-options">
+            <a href="#">Red</a>
+            <a href="#">Yellow</a>
+            <a href="#">Green</a>
+            <a href="#">Orange</a>
+        </div>
+    </div>
+
+
+    <p class="sortBy"></p><strong>Sort By</strong></p>
+    <div class="dropdown">
+        <button>Sort By</button>
+        <div class="dropdown-options">
+            <a href="#">Price:Low to High</a>
+            <a href="#">Price:High to Low</a>
+        </div>
+    </div>
+</div>
+
+<div class="flowerCardContainer">
+</div>
+
+<div id="flowerFilter"></div>
+
+<script>
+    let host = "https://flower-backend-latest.onrender.com";
+    let flowers = [];
+
+    function createFlowerCard(flower) {
+        let card = document.createElement('div');
+        card.className = 'flower-card';
+        card.innerHTML = `
+                <div class="cardImage">
+                <img src="${host}/flowers/${flower.id}/image" alt="${flower.name}">
+                </div>
+                <div class="cardContent">
+                <h2 class="cardTitle">${flower.name}</h2>
+                <p>from  $${flower.cost}</p>
+                </div>
+            `;
+        card.addEventListener('click',function(){
+            localStorage.setItem('selectedFlower', JSON.stringify(flower));
+            window.location.href = "addToBasket.html";
+        });
+        return card;
+    }
+
+    async function getFlowers() {
+        let request = await fetch(host + "/flowers");
+        let response = await request.json();
+        flowers = response;
+        for (flower of flowers) {
+            console.log(flower);
+            let card = createFlowerCard(flower);
+            document.querySelector('.flowerCardContainer').appendChild(card);
+        }
+    }
+    getFlowers();
+
+    let dropdownOptions = document.querySelectorAll('.dropdown-options');
+
+    dropdownOptions.forEach(option => {
+        option.addEventListener('click', function(event){
+            event.preventDefault();
+            let selectedFilter = this.textContent;
+            filterFlowers(selectedFilter);
+        });
+    });
+
+    function filterFlowers(selectedFilter){
+        let filteredFlowers = flowers.filter(flower => flower.name === selectedFilter);
+
+        let flowerCardContainer = document.querySelector('.flowerCardContainer');
+        while (flowerCardContainer.firstChild) {
+            flowerCardContainer.removeChild(flowerCardContainer.firstChild);
+        }
+
+        for (flower of filteredFlowers) {
+            let card = createFlowerCard(flower);
+            document.querySelector('.flowerCardContainer').appendChild(card);
+        }
+    }
+</script>
+
+
+
+</body>
+</html>

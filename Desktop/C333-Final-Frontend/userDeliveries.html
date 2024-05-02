@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="addToBasket.css">
+    <link rel="stylesheet" href="stepper.css">
+    <link rel="stylesheet" href="guestDelivery.css">
+</head>
+<body>
+<div class="navbar">
+    <div class="logo"><a href="index.html"><img class= "logoIcon" src="icons/logo.jpg" alt="FlowerShop Logo"></a></div>
+    <div class="nav-links">
+        <a href="trackOrders.html">Track Order</a>
+        <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" width="25"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg></a>
+        <a href="#"><img class="cart" src="icons/cart.jpg"></a>
+    </div>
+</div>
+
+<div class="formContainer"></div>
+
+
+
+<div class="form-section">
+    <h2>RECIPIENT</h2>
+    <input type="text" placeholder="First Name" required>
+    <input type="text" placeholder="Last Name" required>
+    <select>
+        <option value="" disabled selected>Relationship*</option>
+        <option value="Girlfriend">Girlfriend</option>
+        <option value="Boyfriend">Boyfriend</option>
+        <option value="Spouse">Spouse</option>
+        <option value="Mom">Mom</option>
+        <option value="Dad">Dad</option>
+        <option value="Other">Other</option>
+    </select>
+</div>
+
+<div class="form-section">
+    <h2>DELIVER TO</h2>
+    <input type="text" placeholder="Address" required>
+    <input type="text" placeholder="Apt/Suite">
+    <input type="text" placeholder="City" required>
+    <select>
+        <option value="" disabled selected>State*</option>
+        <option value="IL">Illinois</option>
+        <option value="IN">Indiana</option>
+        <option value="WY">Wyoming</option>
+        <option value="OH">Ohio</option>
+        <option value="KY">Kentucky</option>
+    </select>
+    <input type="text" placeholder="Zip Code" required>
+</div>
+
+
+<button onclick="toOrderPage()">CONTINUE</button>
+
+<script src="Configuration.js"></script>
+<script>
+    let selectedFlower = JSON.parse(localStorage.getItem('selectedFlower'));
+    let basket = JSON.parse(localStorage.getItem('basket'));
+    function goToLoginAndSignup(){
+        window.location.href = "login.html";
+    }
+
+    function toOrderPage(){
+        let formDivs = document.querySelectorAll('.form-section');
+        let recipient = {
+            firstName: formDivs[0].querySelector('input').value,
+            lastName: formDivs[0].querySelectorAll('input')[1].value,
+            relationship: formDivs[0].querySelector('select').value
+        };
+
+        let delivery = {
+            address: formDivs[1].querySelector('input').value,
+            aptSuite: formDivs[1].querySelectorAll('input')[1].value,
+            city: formDivs[1].querySelectorAll('input')[2].value,
+            state: formDivs[1].querySelector('select').value,
+            zipCode: formDivs[1].querySelectorAll('input')[3].value
+        };
+
+        localStorage.setItem('recipient', JSON.stringify(recipient));
+        localStorage.setItem('delivery', JSON.stringify(delivery));
+
+        window.location.href = "placedOrderPage.html";
+    }
+    function generateFlowerInfo(selectedFlower,basket, host){
+        let div = document.createElement('div');
+
+        div.innerHTML = `
+                <h2>${selectedFlower.name}<h2>
+                <h2>${selectedFlower.cost}<h2>
+                <img src="${host}/flowers/${selectedFlower.id}/image" alt="${selectedFlower.name}">
+                <p>Delivery Date: ${basket[0].deliveryDate}</p>
+                `;
+
+        let formContainer = document.querySelector('.formContainer');
+        formContainer.appendChild(div);
+    }
+    generateFlowerInfo(selectedFlower,basket, host);
+</script>
+</body>
+</html>

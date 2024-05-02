@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="addToBasketPage.css">
+    <link rel="stylesheet" href="stepper.css">
+    <link rel="stylesheet" href="placedOrder.css">
+</head>
+<body>
+<div class="navbar">
+    <div class="logo"><a href="index.html"><img class= "logoIcon" src="icons/logo.jpg" alt="FlowerShop Logo"></a></div>
+    <div class="nav-links">
+        <a href="trackOrders.html">Track Order</a>
+        <a href="login.html"><svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" width="25"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg></a>
+        <a href="#"><img class="cart" src="icons/cart.png"></a>
+    </div>
+</div>
+<div class="container">
+    <ul class="progressbar">
+        <li class="active">Review</li>
+        <li class="active">Delivery</li>
+        <li>Done</li>
+    </ul>
+</div>
+
+
+<div class="orderDetailsContainer"></div>
+
+
+
+<script src="Configuration.js"></script>
+<script>
+    let selectedFlower = JSON.parse(localStorage.getItem('selectedFlower'));
+    let recipient = JSON.parse(localStorage.getItem('recipient'));
+    let delivery = JSON.parse(localStorage.getItem('delivery'));
+    let basket = JSON.parse(localStorage.getItem('basket'));
+    function displayOrderDetails(selectedFilter,recipient,delivery){
+        let div = document.createElement('div');
+        div.className = "order-summary"
+
+        div.innerHTML = `
+                <h1>${selectedFlower.name}</h1>
+                <h2>Delivery Date</h2>
+                <p>${basket[0].deliveryDate}</p>
+                <h2>Item Pricing</h2>
+                <p>${selectedFlower.cost}</p>
+                <h2>Delivery Address</h2>
+                <p>${recipient.firstName} ${recipient.lastName}</p>
+                <p>${delivery.address}</p>
+                <p>${delivery.city}, ${delivery.state} ${delivery.zipCode}</p>
+
+
+            `;
+        let orderDetailsContainer = document.querySelector('.orderDetailsContainer');
+        orderDetailsContainer.appendChild(div);
+        console.log(selectedFlower)
+        console.log(recipient);
+        console.log(delivery);
+    }
+
+    function displayFlowerImage(selectedFlower){
+        let div = document.createElement('div');
+        div.className = "imageContainer"
+
+        div.innerHTML = `
+                    <img src="${host}/flowers/${selectedFlower.id}/image" alt="${selectedFlower.name}">
+            `;
+        let orderDetailsContainer = document.querySelector('.orderDetailsContainer');
+        orderDetailsContainer.appendChild(div);
+    }
+
+
+    function displayOrderTotal(){
+        let div = document.createElement('div');
+        let customerPrice = parseFloat(selectedFlower.cost + 15.00).toFixed(2);
+        let guestPrice = parseFloat(selectedFlower.cost + 25.00).toFixed(2);
+        div.className = "order-total";
+
+        if (isLoggedIn() == true){
+            div.innerHTML = `
+                <section class="banner">
+                    <p><strong>You are saving $10.00 on this order!</strong></p>
+                </section>
+                <section class="order-amounts">
+                    <h2>SUBTOTAL</h2>
+                    <p>Delivery:                  $25.00</p>
+                    <p>Deliver Discount:         -$10.00</p>
+                    <p>Tax:                        $0.00</p>
+                    <p><strong>Order Total: ${customerPrice}</strong></p>
+                </section>
+                <button onclick="placeOrder()">PLACE ORDER</button>
+                <p>By Clicking "Place Order" you agree to the Terms of Use and Privacy Policy</p>
+                `;
+            let orderDetailsContainer = document.querySelector('.orderDetailsContainer');
+            orderDetailsContainer.appendChild(div);
+        } else {
+            div.innerHTML = `
+                <section class="order-amounts">
+                    <h2>SUBTOTAL</h2>
+                    <p>Delivery:                  $25.00</p>
+                    <p>Tax:                        $0.00</p>
+                    <p><strong>Order Total: $${guestPrice}</strong></p>
+                </section>
+                <button onclick="placeOrder()">PLACE ORDER</button>
+                <p>By Clicking "Place Order" you agree to the Terms of Use and Privacy Policy</p>
+                `;
+            let orderDetailsContainer = document.querySelector('.orderDetailsContainer');
+            orderDetailsContainer.appendChild(div);
+        }
+    }
+
+    displayFlowerImage(selectedFlower);
+
+    displayOrderDetails(selectedFlower,recipient,delivery);
+
+    displayOrderTotal();
+
+    let flowerId = selectedFlower.id;
+    let recipientName = recipient.firstName + " " + recipient.lastName;
+    let order;
+
+    async function placeOrder(){
+        if (isLoggedIn()== true){
+            let customerUserName = localStorage.getItem('username');
+            order = {
+                flowerId: flowerId,
+                recipientName: recipientName,
+                totalCost: parseFloat(selectedFlower.cost + 15.00).toFixed(2),
+                customerUserName: customerUserName
+            }
+        } else{
+            let customerUserName = customer ? customer.username : "guest";
+            customerUserName = "guest";
+            order = {
+                flowerId: flowerId,
+                recipientName: recipientName,
+                totalCost: parseFloat(selectedFlower.cost + 25.00).toFixed(2),
+                customerUserName: customerUserName
+            };
+        }
+
+        let request = await fetch(host + "/orders", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        });
+
+        let response = await request.json();
+        console.log(response);
+        localStorage.removeItem('selectedFlower');
+        localStorage.removeItem('recipient');
+        localStorage.removeItem('delivery');
+
+        if (isLoggedIn() == true){
+            window.location.href = "trackOrderPage.html";
+        } else {
+            window.location.href = "login.html";
+        }
+    }
+
+
+
+
+</script>
+
+</body>
+</html>
